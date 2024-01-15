@@ -1,0 +1,72 @@
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://h5x3p0ydjmln"]
+
+[ext_resource type="FontFile" uid="uid://d37byae4esy61" path="res://Assets/Fonts/PixelMiddle.ttf" id="1_sjiq5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7hgwd"]
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dtw3i"]
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_5au62"]
+color = Color(1, 1, 1, 1)
+thickness = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ceanl"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hom7s"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ux1hj"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_genrs"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pkglx"]
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_plbi3"]
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[resource]
+Button/font_sizes/font_size = 16
+Button/fonts/font = ExtResource("1_sjiq5")
+Button/styles/disabled = SubResource("StyleBoxTexture_7hgwd")
+Button/styles/focus = SubResource("StyleBoxTexture_dtw3i")
+Button/styles/hover = SubResource("StyleBoxTexture_dtw3i")
+Button/styles/normal = SubResource("StyleBoxTexture_7hgwd")
+CheckButton/icons/checked = null
+CheckButton/icons/unchecked = null
+HSlider/constants/center_grabber = 0
+HSlider/icons/grabber = null
+HSlider/icons/grabber_disabled = null
+HSlider/icons/grabber_highlight = null
+HSlider/icons/tick = null
+HSlider/styles/grabber_area = null
+HSlider/styles/grabber_area_highlight = null
+HSlider/styles/slider = SubResource("StyleBoxLine_5au62")
+Label/fonts/font = ExtResource("1_sjiq5")
+Panel/styles/panel = SubResource("StyleBoxFlat_ceanl")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_hom7s")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_ux1hj")
+RichTextLabel/fonts/bold_font = null
+RichTextLabel/fonts/bold_italics_font = null
+RichTextLabel/fonts/normal_font = null
+TabContainer/styles/panel = SubResource("StyleBoxFlat_genrs")
+VScrollBar/styles/grabber = SubResource("StyleBoxTexture_pkglx")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxTexture_plbi3")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxTexture_pkglx")
