@@ -35,6 +35,11 @@ window/vsync/vsync_mode=0
 
 project/assembly_name="Boaba Yaga Rewrite"
 
+[editor]
+
+movie_writer/movie_file="C:/Users/parke/Videos/cursor_proposal.avi"
+movie_writer/fps=24
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/camera_2d_plus/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/script-ide/plugin.cfg")

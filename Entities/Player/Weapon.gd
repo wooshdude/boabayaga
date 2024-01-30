@@ -4,6 +4,7 @@ extends Node2D
 @export var data: Gun : set = set_data
 @export var ui: CanvasLayer
 
+@export var cursor: Node2D
 @onready var sprite = $Sprite2D
 @onready var bullet = preload("res://Entities/Bullet.tscn")
 @onready var muzzle_flash = preload("res://Assets/Effects/MuzzleFlash.tscn")
@@ -45,7 +46,7 @@ func _process(delta):
 			direction = joy_dir.normalized()
 		else: direction = direction
 	elif InputManager.input_type == InputManager.KBM:
-		direction = player.global_position.direction_to(player.get_global_mouse_position())
+		direction = player.global_position.direction_to(cursor.cursor.global_position)
 	direction = direction.normalized()
 	var rot = atan2(direction.y, direction.x)
 	
@@ -73,7 +74,7 @@ func shoot():
 		if abs(joy_dir.length()) >= 0.2:
 			direction = joy_dir.normalized()
 	elif InputManager.input_type == InputManager.KBM:
-		direction = get_global_mouse_position() - self.global_position
+		direction = cursor.cursor.global_position - self.global_position
 	direction = -direction.normalized()
 	
 	camera.set_shake(data.recoil)

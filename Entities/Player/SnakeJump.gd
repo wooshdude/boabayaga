@@ -3,6 +3,7 @@ class_name SnakeMovement
 
 @export var controller: bool
 @export var player: CharacterBody2D
+@export var cursor: Node2D
 @export var area: Area2D
 @export_range(1,10, 0.1) var strength: float  # Jump strength
 @export var health_component: HealthComponent
@@ -81,7 +82,7 @@ func jump():
 		print(direction)
 		#direction = offsetDirectionUpwards(direction, 0.01).normalized()
 	elif InputManager.input_type == InputManager.KBM:
-		direction = player.global_position.direction_to(player.get_global_mouse_position()).normalized()
+		direction = player.global_position.direction_to(cursor.cursor.global_position).normalized()
 		direction = offsetDirectionUpwards(direction).normalized()
 	
 	print(direction)

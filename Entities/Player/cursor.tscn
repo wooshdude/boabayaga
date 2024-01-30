@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgaiw345fpafw"]
+
+[ext_resource type="Script" path="res://Entities/Player/Cursor.gd" id="1_dak4w"]
+[ext_resource type="Texture2D" uid="uid://b8xkj57ujly4m" path="res://Assets/Sprites/white_circle.png" id="2_1jpyv"]
+
+[node name="Cursor" type="Node2D"]
+script = ExtResource("1_dak4w")
+radius = 20.0
+sensitivity = 0.2
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_1jpyv")
