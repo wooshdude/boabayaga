@@ -13,8 +13,7 @@ class_name SnakeBody
 @export var magnitude: float  # How much the curve gitinfluences the skew
 @export var amplitude = 2
 @export var frequency = 0.008
-
-@onready var weapon: Node2D = $"../Weapon"
+@export var weapon: Node2D
 
 var bodies: Array[Sprite2D]		# Stores individual segment objects
 var points: Array[Vector2]		# Saves previous positions

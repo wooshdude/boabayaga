@@ -23,4 +23,4 @@ func set_data(new_data: Gun = null):
 
 
 func _on_hurtbox_component_body_entered(body):
-	body.get_node("Weapon").data = data
+	body.get_node("PrimaryWeapon").data = data

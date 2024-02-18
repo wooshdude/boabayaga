@@ -32,4 +32,8 @@ func _input(event):
 		Input.mouse_mode = self.mouse_modes[int(self.mouse_toggled)]
 
 
+func hide_mouse():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+func show_mouse():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

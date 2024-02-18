@@ -1,6 +1,7 @@
 @tool
 extends Node2D
 
+@export var cursor_orbit: bool
 @export_range(1,100,0.1) var radius: float = 25
 
 @onready var cursor:Sprite2D = $Sprite
@@ -14,9 +15,15 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	queue_redraw()
 	
 	if Engine.is_editor_hint(): return
+	
+	if not cursor_orbit:
+		cursor.hide()
+		InputManager.show_mouse()
+		return
+	
+	InputManager.hide_mouse()
 	
 	# Get mouse movement
 	var mouse_movement = Input.get_last_mouse_velocity()
@@ -26,6 +33,14 @@ func _process(delta: float) -> void:
 	
 	cursor.position = cursor.position.limit_length(radius)
 
+	queue_redraw()
 
 func _draw() -> void:
-	draw_arc(Vector2.ZERO, self.radius, 0, 2*PI, 45, Color.WHITE,1,false)
+	if cursor_orbit:
+		draw_arc(Vector2.ZERO, self.radius, 0, 2*PI, 45, Color.WHITE,1,false)
+
+
+func get_cursor_position():
+	if cursor_orbit:
+		return cursor.global_position
+	return get_global_mouse_position()

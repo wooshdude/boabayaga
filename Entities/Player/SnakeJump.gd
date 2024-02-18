@@ -82,7 +82,7 @@ func jump():
 		print(direction)
 		#direction = offsetDirectionUpwards(direction, 0.01).normalized()
 	elif InputManager.input_type == InputManager.KBM:
-		direction = player.global_position.direction_to(cursor.cursor.global_position).normalized()
+		direction = player.global_position.direction_to(cursor.get_cursor_position()).normalized()
 		direction = offsetDirectionUpwards(direction).normalized()
 	
 	print(direction)

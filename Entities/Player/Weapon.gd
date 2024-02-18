@@ -1,6 +1,8 @@
 extends Node2D
 
 @export var player: CharacterBody2D
+@export_enum("Primary", "Secondary") var type: String = "Primary"
+@export var sibling: Node2D
 @export var data: Gun : set = set_data
 @export var ui: CanvasLayer
 
@@ -30,13 +32,13 @@ func _ready():
 func _process(delta):
 	if not data: 
 		sprite.texture = null
-		ui.texture_rect.texture = null
-		ui.label.text = ''
+		#ui.texture_rect.texture = null
+		#ui.label.text = ''
 		return
 		
 	sprite.texture = data.texture
-	ui.texture_rect.texture = data.texture
-	ui.label.text = str(ammo) + "/" + str(data.ammo)
+	#ui.texture_rect.texture = data.texture
+	#ui.label.text = str(ammo) + "/" + str(data.ammo)
 	
 	var direction: Vector2
 	if InputManager.input_type == InputManager.CONTROLLER:
@@ -46,7 +48,7 @@ func _process(delta):
 			direction = joy_dir.normalized()
 		else: direction = direction
 	elif InputManager.input_type == InputManager.KBM:
-		direction = player.global_position.direction_to(cursor.cursor.global_position)
+		direction = player.global_position.direction_to(cursor.get_cursor_position())
 	direction = direction.normalized()
 	var rot = atan2(direction.y, direction.x)
 	
@@ -60,11 +62,12 @@ func _process(delta):
 	else:
 		sprite.flip_v = false
 	
-	if Input.is_action_pressed("shoot") and rpm_timer.time_left == 0:
+	if Input.is_action_pressed("%s_shoot" % type.to_lower()) and rpm_timer.time_left == 0:
 		shoot()
 
 
 func shoot():
+	print("%s_shoot" % type.to_lower())
 	if data.rpm == 0: return
 	
 	var direction: Vector2
@@ -74,7 +77,7 @@ func shoot():
 		if abs(joy_dir.length()) >= 0.2:
 			direction = joy_dir.normalized()
 	elif InputManager.input_type == InputManager.KBM:
-		direction = cursor.cursor.global_position - self.global_position
+		direction = cursor.get_cursor_position() - self.global_position
 	direction = -direction.normalized()
 	
 	camera.set_shake(data.recoil)
@@ -114,7 +117,12 @@ func spread_vector(vector: Vector2, spread: float):
 
 
 func set_data(new_data = null):
+	if data and type == "Primary":
+		sibling.data=data
+		print('set new data on secondary')
+	
 	data = new_data
+	print('set new data on primary')
 	
 	sound_component.play("Equip")
 	
