@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_xi2s8")
+name = "SMG"
 texture = ExtResource("2_uhck7")
 rpm = 600.0
 bullets = 1
@@ -15,7 +16,7 @@ recoil = 2.0
 recoil_type = "Add"
 velocity_cap = Vector2(100, 150)
 throwable = true
-break_on_contact = false
+break_on_contact = true
 follow_strength = 0.0
 shake_strength = 0.0
 burst = 3

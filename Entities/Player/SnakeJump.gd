@@ -27,7 +27,7 @@ func _ready():
 	area.connect("area_entered", on_area_entered)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	#print(player.velocity)
 	
 	if not player.is_on_floor_only() and not player.is_on_wall():

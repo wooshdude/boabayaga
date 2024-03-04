@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://de4b7homtde6i"]
+
+[ext_resource type="Texture2D" uid="uid://b232cxsl4up0a" path="res://icon.svg" id="1_we356"]
+
+[node name="ConcertPenis" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(189, 102)
+texture = ExtResource("1_we356")

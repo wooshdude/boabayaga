@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_7xcs6")
+name = "Shotgun"
 texture = ExtResource("2_o227e")
 rpm = 60.0
 bullets = 6
@@ -13,7 +14,7 @@ life_time = 0.5
 ammo = 4
 recoil = 10.0
 recoil_type = "Set"
-velocity_cap = Vector2(200, 200)
+velocity_cap = Vector2(500, 500)
 throwable = true
 break_on_contact = true
 follow_strength = 0.0

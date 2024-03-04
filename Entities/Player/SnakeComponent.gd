@@ -72,7 +72,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(_delta):
 	points.push_front(player.global_position)
 	
 	# Manages points array overflow
@@ -97,7 +97,7 @@ func _physics_process(delta):
 	if weapon:
 		weapon.global_position = bodies[-1].global_position
 
-func _process(delta):
+func _process(_delta):
 	if Engine.is_editor_hint():
 		editor_sprite.position = player.position
 

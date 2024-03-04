@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Gun" load_steps=3 format=3 uid="uid://cdejkdmsck747"]
+
+[ext_resource type="Script" path="res://Entities/Weapons/gun.gd" id="1_v0wqe"]
+[ext_resource type="Texture2D" uid="uid://b7ejxfqmgcrrg" path="res://Assets/Sprites/knife.png" id="2_hn4iv"]
+
+[resource]
+script = ExtResource("1_v0wqe")
+name = "Knife"
+texture = ExtResource("2_hn4iv")
+rpm = 1.0
+bullets = 1
+spread = 0.0
+life_time = 0.0
+ammo = 0
+recoil = 0.0
+recoil_type = "Set"
+velocity_cap = Vector2(200, 200)
+throwable = true
+break_on_contact = false
+can_be_picked_up = true
+follow_strength = 0.0
+shake_strength = 0.0
+burst = 0

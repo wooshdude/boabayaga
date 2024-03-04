@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://h5x3p0ydjmln"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://h5x3p0ydjmln"]
 
 [ext_resource type="FontFile" uid="uid://d37byae4esy61" path="res://Assets/Fonts/PixelMiddle.ttf" id="1_sjiq5"]
+[ext_resource type="FontFile" uid="uid://b05tjyd7ohuua" path="res://Assets/Fonts/PixelSmall.ttf" id="2_jn27x"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7hgwd"]
 texture_margin_left = 3.0
@@ -61,6 +62,7 @@ HSlider/styles/grabber_area_highlight = null
 HSlider/styles/slider = SubResource("StyleBoxLine_5au62")
 Label/fonts/font = ExtResource("1_sjiq5")
 Panel/styles/panel = SubResource("StyleBoxFlat_ceanl")
+PopupMenu/fonts/font = ExtResource("2_jn27x")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_hom7s")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_ux1hj")
 RichTextLabel/fonts/bold_font = null

@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://cab2ywslhk7h6"]
+
+[ext_resource type="Theme" uid="uid://h5x3p0ydjmln" path="res://Assets/ui_theme.tres" id="1_s3ui3"]
+[ext_resource type="Script" path="res://Tools/dev_console.gd" id="2_rguj6"]
+[ext_resource type="Resource" uid="uid://ccyqvuqo5fllx" path="res://Entities/Weapons/Rifle.tres" id="3_dgm66"]
+[ext_resource type="Resource" uid="uid://cl71fw3ji1a22" path="res://Entities/Weapons/Shotgun.tres" id="4_jeukm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6lsp"]
+bg_color = Color(0.141176, 0.141176, 0.141176, 1)
+
+[node name="DevConsole" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -152.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_s3ui3")
+script = ExtResource("2_rguj6")
+weapons = Array[Resource("res://Entities/Weapons/gun.gd")]([ExtResource("3_dgm66"), ExtResource("4_jeukm")])
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l6lsp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 4.0
+offset_right = -8.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="WeaponEquip" type="MenuButton" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Equip Weapon
+"
+flat = false
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/WeaponEquip" to="." method="_on_weapon_equip_pressed"]

@@ -2,6 +2,7 @@ extends Resource
 class_name Gun
 
 @export_category("Gun")
+@export var name: String
 @export var texture: Texture2D
 @export_range(0,1000,1) var rpm: float
 @export_range(0,10,1) var bullets: int
@@ -15,8 +16,9 @@ class_name Gun
 @export var velocity_cap := Vector2(200,200)
 
 @export_group("Behavior")
-@export var throwable: bool
-@export var break_on_contact: bool
+@export var throwable: bool = true
+@export var break_on_contact: bool = true
+@export var can_be_picked_up: bool = false
 
 @export_group("Camera")
 @export_range(0,10,0.1) var follow_strength: float

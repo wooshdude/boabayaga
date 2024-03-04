@@ -20,8 +20,6 @@ config/icon="res://icon.svg"
 InputManager="*res://Globals/InputManager.gd"
 VideoManager="res://Globals/VideoManager.gd"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
-OrchestratorNodeFactory="*res://addons/orchestrator/orchestrator_node_factory.gd"
-Orchestrator="*res://addons/orchestrator/orchestrator.gd"
 
 [display]
 
@@ -44,7 +42,7 @@ movie_writer/fps=24
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/camera_2d_plus/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/orchestrator/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/camera_2d_plus/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [input]
 
@@ -68,3 +66,5 @@ secondary_shoot={
 
 textures/canvas_textures/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true

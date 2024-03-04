@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b7fn2gcofu7rq"]
+[gd_scene load_steps=25 format=3 uid="uid://b7fn2gcofu7rq"]
 
 [ext_resource type="Script" path="res://Entities/Player/SnakeComponent.gd" id="1_pioag"]
 [ext_resource type="Script" path="res://Entities/Player/SnakeJump.gd" id="2_w5bis"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cgaiw345fpafw" path="res://Entities/Player/cursor.tscn" id="10_jx04r"]
 [ext_resource type="AudioStream" uid="uid://cxkfpcbq23k8j" path="res://Assets/Sounds/gunshot.wav" id="10_qqoc0"]
 [ext_resource type="Script" path="res://Components/hurtbox_component.gd" id="11_b81dq"]
+[ext_resource type="PackedScene" uid="uid://cab2ywslhk7h6" path="res://Tools/dev_console.tscn" id="13_nojhr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oxhbw"]
 radius = 2.0
@@ -47,7 +48,7 @@ sound = ExtResource("10_qqoc0")
 [sub_resource type="CircleShape2D" id="CircleShape2D_g0s5f"]
 radius = 2.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 safe_margin = 1.0
 
@@ -87,6 +88,12 @@ sounds = Array[ExtResource("6_r88fp")]([SubResource("Resource_0wp68"), SubResour
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("6_37ufh")
 
+[node name="DevConsole" parent="UI" node_paths=PackedStringArray("player_weapon") instance=ExtResource("13_nojhr")]
+visible = false
+offset_right = -284.0
+offset_bottom = -118.0
+player_weapon = NodePath("../../PrimaryWeapon")
+
 [node name="Control" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 15
@@ -94,6 +101,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme = ExtResource("6_mbxd2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Control"]
@@ -117,6 +125,7 @@ layout_mode = 2
 text = "0/0"
 
 [node name="Secondary" type="HBoxContainer" parent="UI/Control/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Control/VBoxContainer/Secondary"]

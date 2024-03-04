@@ -16,6 +16,7 @@ func _ready():# Called when the node enters the scene tree for the first time.
 		self.set_layer_name(0, "Level")
 		
 	if Engine.is_editor_hint(): return
+	print('cock and nuts')
 	
 	for cell in self.get_used_cells(OBJECT_LAYER):  # Returns contents of layer 1
 		for object in objects:

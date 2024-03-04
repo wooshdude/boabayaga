@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dimrvv16o162a"]
+[gd_scene load_steps=11 format=3 uid="uid://dimrvv16o162a"]
 
 [ext_resource type="Script" path="res://Entities/Bullet.gd" id="1_dqpg5"]
 [ext_resource type="Texture2D" uid="uid://b8xkj57ujly4m" path="res://Assets/Sprites/white_circle.png" id="2_gturb"]
@@ -10,15 +10,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_0k6o4"]
 radius = 4.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvo2u"]
-size = Vector2(0, 0)
-
 [sub_resource type="Curve" id="Curve_xmo26"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0uesb"]
-size = Vector2(0, 2)
+size = Vector2(0, 0)
 
 [sub_resource type="Resource" id="Resource_n7mbx"]
 script = ExtResource("5_eicgw")
@@ -44,12 +41,6 @@ collision_mask = 6
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_0k6o4")
 
-[node name="Area2D2" type="Area2D" parent="."]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-shape = SubResource("RectangleShape2D_tvo2u")
-
 [node name="SnakeComponent" type="Node" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("3_lep1b")
 player = NodePath("..")
@@ -66,5 +57,4 @@ script = ExtResource("4_t852a")
 sounds = Array[ExtResource("5_eicgw")]([SubResource("Resource_n7mbx")])
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
