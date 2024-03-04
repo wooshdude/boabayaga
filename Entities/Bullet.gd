@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var muzzle_flash = preload("res://Assets/Effects/hit_particles.tscn")
 @onready var snake_component = $SnakeComponent
 
+@export var throw_data: Gun
 
 var direction = Vector2.LEFT
 var life_time: float = 1
@@ -13,14 +14,20 @@ var hit_something = false
 func _ready():
 	velocity = -direction * 400
 	$SoundComponent.play("Gunshot", true, -5)
-	var tween = get_tree().create_tween()
-	tween.tween_property(sprite_2d, "modulate", Color(1,1,1,0), life_time).set_ease(Tween.EASE_OUT)
+	
+	if throw_data:
+		sprite_2d.show()
+		sprite_2d.texture = throw_data.texture
+		
+		var tween = get_tree().create_tween()
+		tween.tween_property(sprite_2d, "rotation", 360, 0.5)
+		tween.set_loops()
 	
 	await get_tree().create_timer(life_time).timeout
 	self.queue_free()
 	
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	move_and_slide()
 	
 	if is_on_wall() and not hit_something:

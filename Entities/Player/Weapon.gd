@@ -82,6 +82,10 @@ func shoot():
 	
 	camera.set_shake(data.recoil)
 	
+	if data.throwable and ammo <= 0:
+		if ammo == 0: throw(direction.normalized())
+		return
+	
 	rpm_timer.stop()
 	rpm_timer.start(60/data.rpm)
 	
@@ -99,12 +103,35 @@ func shoot():
 	self.add_child(new_flash)
 
 	direction *= 75
-	player.velocity = Vector2(direction.x*data.recoil*0.75, direction.y*data.recoil)
+	match data.recoil_type:
+		"Set":
+			player.velocity = Vector2(direction.x*data.recoil*0.75, direction.y*data.recoil)
+		"Add":
+			player.velocity += Vector2(direction.x*data.recoil*0.75, direction.y*data.recoil)
+		"Multi":
+			player.velocity *= Vector2(direction.x*data.recoil*0.75, direction.y*data.recoil)
+	player.velocity.x = clamp(player.velocity.x, -data.velocity_cap.x, data.velocity_cap.x)
+	player.velocity.y = clamp(player.velocity.y, -data.velocity_cap.y, data.velocity_cap.y)
+	#print(player.velocity)
 	if player.is_on_wall():
 		player.velocity.x += player.get_wall_normal().x
 	
 	ammo -= 1
-	if ammo <= 0: set_data()
+	if not data.throwable and ammo <=0: set_data()
+
+
+func throw(direction):
+	print('thrown')
+	var new_bullet = bullet.instantiate()
+	new_bullet.top_level = true
+	new_bullet.life_time = data.life_time
+	new_bullet.global_position = muzzle.global_position
+	new_bullet.velocity += self.get_parent().velocity
+	new_bullet.direction = spread_vector(direction, data.spread)
+	new_bullet.throw_data = data
+	muzzle.add_child(new_bullet)
+	
+	set_data()
 
 
 func spread_vector(vector: Vector2, spread: float):
@@ -118,8 +145,9 @@ func spread_vector(vector: Vector2, spread: float):
 
 func set_data(new_data = null):
 	if data and type == "Primary":
-		sibling.data=data
-		print('set new data on secondary')
+		#sibling.data=data
+		#print('set new data on secondary')
+		pass
 	
 	data = new_data
 	print('set new data on primary')

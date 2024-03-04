@@ -6,11 +6,16 @@
 [resource]
 script = ExtResource("1_xi2s8")
 texture = ExtResource("2_uhck7")
-full_auto = true
+rpm = 600.0
 bullets = 1
-rpm = 480.0
 spread = 0.2
-recoil = 2.0
 life_time = 1.0
 ammo = 24
+recoil = 2.0
+recoil_type = "Add"
+velocity_cap = Vector2(100, 150)
+throwable = true
+break_on_contact = false
+follow_strength = 0.0
+shake_strength = 0.0
 burst = 3
