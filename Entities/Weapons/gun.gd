@@ -1,7 +1,7 @@
 extends Resource
 class_name Gun
 
-@export_category("Gun")
+@export_category("Weapon")
 @export var name: String
 @export var texture: Texture2D
 @export_range(0,1000,1) var rpm: float

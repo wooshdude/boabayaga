@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dku4evrftmg05"]
+
+[ext_resource type="PackedScene" uid="uid://bidqdx73g8c6f" path="res://Entities/Enemies/bad_guy.tscn" id="1_rhimo"]
+[ext_resource type="Script" path="res://Testing/ai_testing.gd" id="1_ye8j4"]
+[ext_resource type="Texture2D" uid="uid://cojxvaj0vqccj" path="res://Assets/Sprites/snake_body_editor_icon.png" id="2_hajvh"]
+
+[node name="AiTesting" type="Node2D"]
+script = ExtResource("1_ye8j4")
+
+[node name="BadGuy" parent="." instance=ExtResource("1_rhimo")]
+
+[node name="BeehaveTree" parent="BadGuy" index="0" node_paths=PackedStringArray("blackboard")]
+blackboard = NodePath("@Node@57811")
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
+position = Vector2(262, 126)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_hajvh")
+
+[editable path="BadGuy"]
+[editable path="BadGuy/BeehaveTree/SelectorComposite/AttackPlayer"]

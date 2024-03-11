@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://fxfer8hwm5lq"]
+
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="1_m6brr"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="2_myv1g"]
+[ext_resource type="Script" path="res://Components/Behaviors/CheckForPlayer.gd" id="3_ucg02"]
+[ext_resource type="Script" path="res://Components/Behaviors/Wander.gd" id="4_2tn1c"]
+
+[node name="Wander" type="Node"]
+script = ExtResource("1_m6brr")
+
+[node name="InverterDecorator" type="Node" parent="."]
+script = ExtResource("2_myv1g")
+
+[node name="CheckForPlayer" type="Node" parent="InverterDecorator"]
+script = ExtResource("3_ucg02")
+distance = 100.0
+
+[node name="WanderAction" type="Node" parent="."]
+script = ExtResource("4_2tn1c")

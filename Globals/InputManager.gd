@@ -9,7 +9,7 @@ enum {
 }
 
 var mouse_modes = [Input.MOUSE_MODE_VISIBLE, Input.MOUSE_MODE_CAPTURED]
-var mouse_toggled = true
+var mouse_toggled = false
 
 func _ready() -> void:
 	Input.mouse_mode = self.mouse_modes[int(self.mouse_toggled)]

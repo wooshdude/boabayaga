@@ -18,14 +18,12 @@ func _process(_delta):
 	# Primary Weapon
 	if primary_weapon.data:
 		primary_icon.texture = primary_weapon.data.texture
-		primary_count.text = "%s/%s" % [str(primary_weapon.ammo),str(primary_weapon.data.ammo)]
+		if primary_weapon.ammo > 0:
+			primary_count.text = "%s/%s" % [str(primary_weapon.ammo),str(primary_weapon.data.ammo)]
+		else:
+			primary_count.text = "THROW IT!"
 	else:
 		primary_icon.texture = WHITE_CIRCLE
 		primary_count.text = ''
 	
-	if secondary_weapon.data:
-		secondary_icon.texture = secondary_weapon.data.texture
-		secondary_count.text = "%s/%s" % [str(secondary_weapon.ammo),str(secondary_weapon.data.ammo)]
-	else:
-		secondary_icon.texture = WHITE_CIRCLE
-		secondary_count.text = ''
+

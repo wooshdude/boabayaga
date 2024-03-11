@@ -1,0 +1,67 @@
+[gd_scene load_steps=12 format=3 uid="uid://bidqdx73g8c6f"]
+
+[ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_ybot2"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_ru0kp"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="2_wil6j"]
+[ext_resource type="Script" path="res://Components/Behaviors/CheckForPlayer.gd" id="3_birpf"]
+[ext_resource type="Script" path="res://Components/Behaviors/MoveToPlayer.gd" id="4_wujuo"]
+[ext_resource type="Script" path="res://Components/Behaviors/MoveToPlayerAction.gd" id="5_4xi71"]
+[ext_resource type="Texture2D" uid="uid://b8xkj57ujly4m" path="res://Assets/Sprites/white_circle.png" id="5_82p3m"]
+[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="5_hb1xg"]
+[ext_resource type="Script" path="res://Components/MovementComponent.gd" id="5_tvb31"]
+[ext_resource type="Script" path="res://Components/Behaviors/Wander.gd" id="6_qui8e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yfaa0"]
+size = Vector2(8, 8)
+
+[node name="BadGuy" type="CharacterBody2D"]
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("1_ybot2")
+blackboard = NodePath("@Node@81733")
+actor = NodePath("..")
+
+[node name="SelectorComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("2_ru0kp")
+
+[node name="AttackPlayer" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("2_wil6j")
+
+[node name="CheckForPlayer" type="Node" parent="BeehaveTree/SelectorComposite/AttackPlayer"]
+script = ExtResource("3_birpf")
+distance = 10.0
+
+[node name="AttackPlayerAction" type="Node" parent="BeehaveTree/SelectorComposite/AttackPlayer"]
+script = ExtResource("4_wujuo")
+
+[node name="MoveToPlayer" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("2_wil6j")
+
+[node name="CheckForPlayer" type="Node" parent="BeehaveTree/SelectorComposite/MoveToPlayer"]
+script = ExtResource("3_birpf")
+distance = 100.0
+
+[node name="MoveToPlayerAction" type="Node" parent="BeehaveTree/SelectorComposite/MoveToPlayer"]
+script = ExtResource("5_4xi71")
+
+[node name="Wander" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("2_wil6j")
+
+[node name="InverterDecorator" type="Node" parent="BeehaveTree/SelectorComposite/Wander"]
+script = ExtResource("5_hb1xg")
+
+[node name="CheckForPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Wander/InverterDecorator"]
+script = ExtResource("3_birpf")
+distance = 100.0
+
+[node name="WanderAction" type="Node" parent="BeehaveTree/SelectorComposite/Wander"]
+script = ExtResource("6_qui8e")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("5_82p3m")
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("5_tvb31")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yfaa0")

@@ -57,13 +57,12 @@ shape = SubResource("CircleShape2D_oxhbw")
 
 [node name="Components" type="Node" parent="."]
 
-[node name="SnakeBody" type="Node" parent="Components" node_paths=PackedStringArray("player", "weapon")]
+[node name="SnakeBody" type="Node" parent="Components" node_paths=PackedStringArray("player")]
 script = ExtResource("1_pioag")
 player = NodePath("../..")
 segments = 10
 spacing = 1.0
 taper = SubResource("Curve_yota3")
-weapon = NodePath("../../Secondary Weapon")
 
 [node name="SnakeMovement" type="Node" parent="Components" node_paths=PackedStringArray("player", "cursor", "area", "health_component", "sound_component")]
 script = ExtResource("2_w5bis")
@@ -106,9 +105,9 @@ theme = ExtResource("6_mbxd2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Control"]
 layout_mode = 0
-offset_left = 8.0
+offset_left = 16.0
 offset_top = 168.0
-offset_right = 48.0
+offset_right = 56.0
 offset_bottom = 208.0
 theme_override_constants/separation = 0
 
@@ -139,10 +138,9 @@ text = "0/0"
 
 [node name="Cursor" parent="." instance=ExtResource("10_jx04r")]
 
-[node name="PrimaryWeapon" type="Node2D" parent="." node_paths=PackedStringArray("player", "sibling", "ui", "cursor", "camera", "sound_component")]
+[node name="PrimaryWeapon" type="Node2D" parent="." node_paths=PackedStringArray("player", "ui", "cursor", "camera", "sound_component")]
 script = ExtResource("6_17bit")
 player = NodePath("..")
-sibling = NodePath("../Secondary Weapon")
 ui = NodePath("../UI")
 cursor = NodePath("../Cursor")
 camera = NodePath("../Camera2DPlus")
@@ -155,29 +153,11 @@ sound_component = NodePath("../Components/SoundComponent")
 [node name="RPMTimer" type="Timer" parent="PrimaryWeapon"]
 one_shot = true
 
-[node name="Secondary Weapon" type="Node2D" parent="." node_paths=PackedStringArray("player", "sibling", "ui", "cursor", "camera", "sound_component")]
-script = ExtResource("6_17bit")
-player = NodePath("..")
-type = "Secondary"
-sibling = NodePath("../PrimaryWeapon")
-ui = NodePath("../UI")
-cursor = NodePath("../Cursor")
-camera = NodePath("../Camera2DPlus")
-sound_component = NodePath("../Components/SoundComponent")
-
-[node name="Sprite2D" type="Sprite2D" parent="Secondary Weapon"]
-
-[node name="Muzzle" type="Marker2D" parent="Secondary Weapon"]
-
-[node name="RPMTimer" type="Timer" parent="Secondary Weapon"]
-one_shot = true
-
 [node name="Camera2DPlus" type="Camera2D" parent="."]
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 script = ExtResource("7_5knww")
-SHAKE_DECAY = 0.1
 
 [node name="HurtboxComponent" type="Area2D" parent="."]
 collision_layer = 2

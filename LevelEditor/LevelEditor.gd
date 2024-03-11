@@ -8,16 +8,17 @@ const OBJECT_LAYER: int = 0
 
 
 # Called when the node and it's children enters the scene tree for the first time.
-func _ready():# Called when the node enters the scene tree for the first time.
+func _ready():
+	# Runs in the editor
 	if Engine.is_editor_hint():
 		print("Created New Level")
-		#  This updates 
 		self.tile_set = load("res://LevelEditor/level_editor.tres")
 		self.set_layer_name(0, "Level")
-		
-	if Engine.is_editor_hint(): return
-	print('cock and nuts')
 	
+	if Engine.is_editor_hint(): return
+	# Runs during the game
+	
+	# Extracts entity data from tiles
 	for cell in self.get_used_cells(OBJECT_LAYER):  # Returns contents of layer 1
 		for object in objects:
 			if object.cell == self.get_cell_atlas_coords(OBJECT_LAYER, cell):

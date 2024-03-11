@@ -80,7 +80,7 @@ func shoot():
 		direction = cursor.get_cursor_position() - self.global_position
 	direction = -direction.normalized()
 	
-	camera.set_shake(data.recoil)
+	camera.set_shake(data.shake_strength)
 	
 	if data.throwable and ammo <= 0:
 		if ammo == 0: throw(direction.normalized())

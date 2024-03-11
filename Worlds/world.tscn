@@ -19,8 +19,8 @@ script = ExtResource("3_bteam")
 position = Vector2(-154, -56)
 
 [node name="WeaponKiosk" parent="." instance=ExtResource("4_lntag")]
-position = Vector2(308, 169)
+position = Vector2(303, 152)
 
 [node name="WeaponKiosk2" parent="." instance=ExtResource("4_lntag")]
-position = Vector2(112, 169)
+position = Vector2(113, 152)
 data = ExtResource("5_mppmx")

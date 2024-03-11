@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bo36ndb5f4mer"]
+
+[ext_resource type="Script" path="res://Components/Behaviors/CheckForPlayer.gd" id="3_jtnjp"]
+[ext_resource type="Script" path="res://Components/Behaviors/MoveToPlayerAction.gd" id="4_e6iqu"]
+[ext_resource type="Script" path="res://Components/Behaviors/MoveToPlayer.gd" id="5_371hk"]
+
+[node name="AttackPlayer" type="Node"]
+
+[node name="CheckForPlayer" type="Node" parent="."]
+script = ExtResource("3_jtnjp")
+
+[node name="MoveToPlayerAction" type="Node" parent="."]
+script = ExtResource("4_e6iqu")
+
+[node name="AttackPlayerAction" type="Node" parent="."]
+script = ExtResource("5_371hk")

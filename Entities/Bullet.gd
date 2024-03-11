@@ -6,9 +6,10 @@ extends CharacterBody2D
 
 @export var throw_data: Gun
 
-var direction = Vector2.LEFT
+var direction := Vector2.LEFT
 var life_time: float = 1
-var hit_something = false
+var hit_something := false
+var spawn_point := Vector2.ZERO
 
 @onready var tween = get_tree().create_tween()
 
@@ -16,6 +17,7 @@ var hit_something = false
 func _ready():
 	#print(direction)
 	velocity = -direction * 400
+	spawn_point = global_position
 	$SoundComponent.play("Gunshot", true, -5)
 	
 	if throw_data:
@@ -37,9 +39,10 @@ func _physics_process(_delta):
 		hit_something = true
 		tween.stop()
 		velocity = Vector2.ZERO
-		if not throw_data.can_be_picked_up:
-			$Area2D.monitorable = false
-			$Area2D.monitoring = false
+		if throw_data:
+			if not throw_data.can_be_picked_up:
+				$Area2D.monitorable = false
+				$Area2D.monitoring = false
 		var new_flash = muzzle_flash.instantiate()
 		new_flash.look_at(get_wall_normal())
 		new_flash.emitting = true
@@ -52,9 +55,7 @@ func _physics_process(_delta):
 				await get_tree().create_timer(1).timeout
 				queue_free()
 			else:
-				var rot = rad_to_deg(get_angle_to(direction.normalized()))
-				print(rot)
-				sprite_2d.look_at(global_position + get_wall_normal())
+				sprite_2d.look_at(spawn_point)
 				sprite_2d.rotation_degrees += 45
 
 func _on_area_2d_area_entered(area):
