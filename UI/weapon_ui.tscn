@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1ej66fqullqe"]
+
+[ext_resource type="Script" path="res://UI/weapon_ui.gd" id="1_2u24e"]
+[ext_resource type="Theme" uid="uid://h5x3p0ydjmln" path="res://Assets/ui_theme.tres" id="1_5b0iy"]
+[ext_resource type="Texture2D" uid="uid://bqw7ht6su5x3h" path="res://Assets/Sprites/rifle.png" id="2_hoo1s"]
+
+[node name="WeaponUI" type="HBoxContainer"]
+theme = ExtResource("1_5b0iy")
+script = ExtResource("1_2u24e")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_hoo1s")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "24/24
+"

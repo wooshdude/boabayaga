@@ -10,6 +10,10 @@ func _ready() -> void:
 func tick(actor, blackboard):
 	if timer.is_stopped():
 		wander(actor)
+	if abs(actor.velocity.x) >= 0:
+		actor.animation_player.play("RUN")
+	else:
+		actor.animation_player.play("IDLE")
 
 
 func wander(actor):
@@ -19,4 +23,5 @@ func wander(actor):
 	var duration = randf_range(0,3)
 	
 	actor.velocity.x = direction * 10
+	actor.sprite.flip_h = bool(not clamp(direction, 0, 1))
 	timer.start(duration)

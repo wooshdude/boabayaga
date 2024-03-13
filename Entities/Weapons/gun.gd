@@ -8,7 +8,8 @@ class_name Gun
 @export_range(0,10,1) var bullets: int
 @export_range(0,1,0.1) var spread: float
 @export_range(0,1,0.1) var life_time: float
-@export var ammo: int
+@export var mag_size: int
+var ammo: int
 
 @export_group("Recoil")
 @export_range(0,10,0.1) var recoil: float

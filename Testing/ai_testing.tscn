@@ -19,10 +19,7 @@ texture = ExtResource("2_hajvh")
 position = Vector2(104, 96)
 
 [node name="BeehaveTree" parent="BadGuy" index="0" node_paths=PackedStringArray("blackboard")]
-blackboard = NodePath("@Node@86026")
-
-[node name="MovementComponent" parent="BadGuy" index="2" node_paths=PackedStringArray("entity")]
-entity = NodePath("..")
+blackboard = NodePath("@Node@119469")
 
 [node name="LevelEditor" type="TileMap" parent="."]
 tile_set = ExtResource("4_0ldwk")

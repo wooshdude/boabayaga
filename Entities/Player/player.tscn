@@ -1,22 +1,19 @@
-[gd_scene load_steps=25 format=3 uid="uid://b7fn2gcofu7rq"]
+[gd_scene load_steps=23 format=3 uid="uid://b7fn2gcofu7rq"]
 
 [ext_resource type="Script" path="res://Entities/Player/SnakeComponent.gd" id="1_pioag"]
 [ext_resource type="Script" path="res://Entities/Player/SnakeJump.gd" id="2_w5bis"]
 [ext_resource type="Script" path="res://Components/health_component.gd" id="3_svqqg"]
 [ext_resource type="Script" path="res://Components/SoundComponent.gd" id="4_t6hgo"]
 [ext_resource type="Script" path="res://Entities/Player/Weapon.gd" id="6_17bit"]
-[ext_resource type="Script" path="res://Entities/Player/UI.gd" id="6_37ufh"]
-[ext_resource type="Theme" uid="uid://h5x3p0ydjmln" path="res://Assets/ui_theme.tres" id="6_mbxd2"]
 [ext_resource type="Script" path="res://Components/SoundData.gd" id="6_r88fp"]
 [ext_resource type="Script" path="res://addons/camera_2d_plus/objects/camera_2d_plus/camera_2d_plus_script.gd" id="7_5knww"]
-[ext_resource type="Texture2D" uid="uid://bqw7ht6su5x3h" path="res://Assets/Sprites/rifle.png" id="7_jpvp6"]
 [ext_resource type="AudioStream" uid="uid://cbbb32hb10p80" path="res://Assets/Sounds/jump.wav" id="7_yhxvj"]
 [ext_resource type="AudioStream" uid="uid://b6ieu5gp2nb5g" path="res://Assets/Sounds/land.wav" id="8_grwgy"]
 [ext_resource type="AudioStream" uid="uid://c1grao7tp4k1r" path="res://Assets/Sounds/gun cocking 4.wav" id="9_lxd8j"]
+[ext_resource type="PackedScene" uid="uid://bat6iq8o0gqcf" path="res://UI/weapon_hud.tscn" id="10_h82nw"]
 [ext_resource type="PackedScene" uid="uid://cgaiw345fpafw" path="res://Entities/Player/cursor.tscn" id="10_jx04r"]
 [ext_resource type="AudioStream" uid="uid://cxkfpcbq23k8j" path="res://Assets/Sounds/gunshot.wav" id="10_qqoc0"]
 [ext_resource type="Script" path="res://Components/hurtbox_component.gd" id="11_b81dq"]
-[ext_resource type="PackedScene" uid="uid://cab2ywslhk7h6" path="res://Tools/dev_console.tscn" id="13_nojhr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oxhbw"]
 radius = 2.0
@@ -48,6 +45,9 @@ sound = ExtResource("10_qqoc0")
 [sub_resource type="CircleShape2D" id="CircleShape2D_g0s5f"]
 radius = 2.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g0rwr"]
+size = Vector2(8, 8)
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 safe_margin = 1.0
@@ -68,7 +68,7 @@ taper = SubResource("Curve_yota3")
 script = ExtResource("2_w5bis")
 player = NodePath("../..")
 cursor = NodePath("../../Cursor")
-area = NodePath("../../HurtboxComponent")
+area = NodePath("../../Grab")
 strength = 6.0
 health_component = NodePath("../HealthComponent")
 sound_component = NodePath("../SoundComponent")
@@ -85,60 +85,22 @@ script = ExtResource("4_t6hgo")
 sounds = Array[ExtResource("6_r88fp")]([SubResource("Resource_0wp68"), SubResource("Resource_tgl0s"), SubResource("Resource_x4i0i"), SubResource("Resource_ib0ok")])
 
 [node name="UI" type="CanvasLayer" parent="."]
-script = ExtResource("6_37ufh")
 
-[node name="DevConsole" parent="UI" node_paths=PackedStringArray("player_weapon") instance=ExtResource("13_nojhr")]
-visible = false
-offset_right = -284.0
-offset_bottom = -118.0
-player_weapon = NodePath("../../PrimaryWeapon")
-
-[node name="Control" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
+[node name="WeaponHUD" parent="UI" node_paths=PackedStringArray("weapon") instance=ExtResource("10_h82nw")]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_right = 8.0
 grow_vertical = 2
-mouse_filter = 1
-theme = ExtResource("6_mbxd2")
+weapon = NodePath("../../Weapon")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 168.0
-offset_right = 56.0
-offset_bottom = 208.0
-theme_override_constants/separation = 0
-
-[node name="Primary" type="HBoxContainer" parent="UI/Control/VBoxContainer"]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="UI/Control/VBoxContainer/Primary"]
-layout_mode = 2
-texture = ExtResource("7_jpvp6")
-stretch_mode = 2
-
-[node name="Label" type="Label" parent="UI/Control/VBoxContainer/Primary"]
-layout_mode = 2
-text = "0/0"
-
-[node name="Secondary" type="HBoxContainer" parent="UI/Control/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="UI/Control/VBoxContainer/Secondary"]
-layout_mode = 2
-texture = ExtResource("7_jpvp6")
-stretch_mode = 2
-
-[node name="Label" type="Label" parent="UI/Control/VBoxContainer/Secondary"]
-layout_mode = 2
-text = "0/0"
+[node name="VBoxContainer" parent="UI/WeaponHUD" index="1"]
+alignment = 0
 
 [node name="Cursor" parent="." instance=ExtResource("10_jx04r")]
 
-[node name="PrimaryWeapon" type="Node2D" parent="." node_paths=PackedStringArray("player", "ui", "cursor", "camera", "sound_component")]
+[node name="Weapon" type="Node2D" parent="." node_paths=PackedStringArray("player", "ui", "cursor", "camera", "sound_component")]
 script = ExtResource("6_17bit")
 player = NodePath("..")
 ui = NodePath("../UI")
@@ -146,11 +108,11 @@ cursor = NodePath("../Cursor")
 camera = NodePath("../Camera2DPlus")
 sound_component = NodePath("../Components/SoundComponent")
 
-[node name="Sprite2D" type="Sprite2D" parent="PrimaryWeapon"]
+[node name="Sprite2D" type="Sprite2D" parent="Weapon"]
 
-[node name="Muzzle" type="Marker2D" parent="PrimaryWeapon"]
+[node name="Muzzle" type="Marker2D" parent="Weapon"]
 
-[node name="RPMTimer" type="Timer" parent="PrimaryWeapon"]
+[node name="RPMTimer" type="Timer" parent="Weapon"]
 one_shot = true
 
 [node name="Camera2DPlus" type="Camera2D" parent="."]
@@ -166,3 +128,12 @@ script = ExtResource("11_b81dq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_g0s5f")
+
+[node name="Grab" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Grab"]
+shape = SubResource("RectangleShape2D_g0rwr")
+
+[editable path="UI/WeaponHUD"]

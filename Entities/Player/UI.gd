@@ -10,7 +10,7 @@ const WHITE_CIRCLE = preload("res://Assets/Sprites/white_circle.png")
 @onready var secondary_icon = $Control/VBoxContainer/Secondary/TextureRect
 @onready var secondary_count = $Control/VBoxContainer/Secondary/Label
 
-@onready var primary_weapon = $"../PrimaryWeapon"
+@onready var primary_weapon = $"../Weapon"
 @onready var secondary_weapon = $"../Secondary Weapon"
 
 
@@ -18,8 +18,8 @@ func _process(_delta):
 	# Primary Weapon
 	if primary_weapon.data:
 		primary_icon.texture = primary_weapon.data.texture
-		if primary_weapon.ammo > 0:
-			primary_count.text = "%s/%s" % [str(primary_weapon.ammo),str(primary_weapon.data.ammo)]
+		if primary_weapon.data.ammo > 0:
+			primary_count.text = "%s/%s" % [str(primary_weapon.data.ammo),str(primary_weapon.data.mag_size)]
 		else:
 			primary_count.text = "THROW IT!"
 	else:

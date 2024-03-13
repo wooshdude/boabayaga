@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuq2bgse4t86w"]
+
+[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="1_3c5ci"]
+[ext_resource type="Script" path="res://Components/Behaviors/IsGrabbed.gd" id="2_ldfii"]
+[ext_resource type="Script" path="res://Components/Behaviors/Tango.gd" id="3_qcvje"]
+
+[node name="Grabbed" type="Node"]
+script = ExtResource("1_3c5ci")
+
+[node name="IsGrabbed" type="Node" parent="."]
+script = ExtResource("2_ldfii")
+
+[node name="Tango" type="Node" parent="."]
+script = ExtResource("3_qcvje")

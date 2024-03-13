@@ -1,9 +1,10 @@
 extends Node2D
+class_name PlayerWeapon
 
 @export var player: CharacterBody2D
-@export_enum("Primary", "Secondary") var type: String = "Primary"
-@export var sibling: Node2D
 @export var data: Gun : set = set_data
+@export var inventory: Array[Gun]
+var selection: int = 0
 @export var ui: CanvasLayer
 
 @export var cursor: Node2D
@@ -17,8 +18,12 @@ extends Node2D
 @export var sound_component: SoundComponent
 
 @onready var tween = get_tree().create_tween()
+var can_shoot = true
 
-var ammo = 0
+signal equiped_weapon(weapon:Gun)
+signal picked_up_weapon(weapon:Gun)
+signal has_scrolled(amount:int)
+signal dropped_weapon(index:int)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -62,12 +67,20 @@ func _process(delta):
 	else:
 		sprite.flip_v = false
 	
-	if Input.is_action_pressed("%s_shoot" % type.to_lower()) and rpm_timer.time_left == 0:
+	if Input.is_action_pressed("shoot") and rpm_timer.time_left == 0 and can_shoot:
 		shoot()
+	
+	if Input.is_action_just_pressed("scroll_up"):
+		scroll(1)
+	
+	if Input.is_action_just_pressed("scroll_down"):
+		scroll(-1)
+		
+	if Input.is_action_just_released("shoot"):
+		can_shoot = true
 
 
 func shoot():
-	print("%s_shoot" % type.to_lower())
 	if data.rpm == 0: return
 	
 	var direction: Vector2
@@ -82,8 +95,10 @@ func shoot():
 	
 	camera.set_shake(data.shake_strength)
 	
-	if data.throwable and ammo <= 0:
-		if ammo == 0: throw(direction.normalized())
+	if data.throwable and data.ammo <= 0:
+		if Input.is_action_just_pressed("shoot"):
+			can_shoot = false
+			if data.ammo == 0: throw(direction.normalized())
 		return
 	
 	rpm_timer.stop()
@@ -116,8 +131,8 @@ func shoot():
 	if player.is_on_wall():
 		player.velocity.x += player.get_wall_normal().x
 	
-	ammo -= 1
-	if not data.throwable and ammo <=0: set_data()
+	data.ammo -= 1
+	#if not data.throwable and data.ammo <=0: set_data()
 
 
 func throw(direction):
@@ -132,6 +147,7 @@ func throw(direction):
 	muzzle.add_child(new_bullet)
 	
 	set_data()
+	scroll(0)
 
 
 func spread_vector(vector: Vector2, spread: float):
@@ -144,21 +160,56 @@ func spread_vector(vector: Vector2, spread: float):
 
 
 func set_data(new_data = null):
-	if data and type == "Primary":
-		#sibling.data=data
-		#print('set new data on secondary')
-		pass
-	
 	data = new_data
-	print('set new data on primary')
-	
 	sound_component.play("Equip")
 	
 	if new_data:
 		if sprite:
 			sprite.texture = new_data.texture
-		ammo = new_data.ammo
+		#new_data.ammo = new_data.mag_size
 		#ammo = 500
 	else:
+		if len(inventory) > 0:
+			scroll(0)
 		sprite.texture = null
-		ammo = 0
+		inventory.pop_at(selection)
+		emit_signal("dropped_weapon",selection)
+	
+	emit_signal("equiped_weapon", new_data)
+
+
+func pickup_data(new_data = null):
+	can_shoot = true
+	var dup_data = new_data.duplicate()
+	dup_data.ammo = dup_data.mag_size
+	inventory.append(dup_data)
+	if not data:
+		set_data(dup_data)
+		selection = 0
+	emit_signal("picked_up_weapon", dup_data)
+	sound_component.play("Equip")
+
+
+func scroll(amount:int = 0):
+	rpm_timer.stop()
+	selection -= amount
+	if selection > len(inventory)-1:
+		selection = 0
+	elif selection < 0:
+		selection = len(inventory)-1
+	if len(inventory) > 0:
+		set_data(inventory[selection])
+	else:
+		set_data()
+	emit_signal("has_scrolled", selection)
+
+
+
+
+
+
+
+
+
+
+

@@ -16,6 +16,7 @@ func tick(actor, blackboard):
 
 
 func attack(actor):
+	actor.animation_player.play("ATTACK")
 	print("attacking %s" % actor.name)
 	actor.velocity.x = 0
 	timer.start(1)

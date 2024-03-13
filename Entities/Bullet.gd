@@ -71,5 +71,5 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	if not throw_data: return
 	if body.is_in_group("Player") and hit_something:
 		print('penis')
-		body.get_node("PrimaryWeapon").data = throw_data
+		body.get_node("Weapon").pickup_data(throw_data)
 		queue_free()

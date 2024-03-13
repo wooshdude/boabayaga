@@ -1,67 +1,160 @@
-[gd_scene load_steps=12 format=3 uid="uid://bidqdx73g8c6f"]
+[gd_scene load_steps=19 format=3 uid="uid://bidqdx73g8c6f"]
 
+[ext_resource type="Script" path="res://Entities/Enemies/entity.gd" id="1_gus0m"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/beehave_tree.gd" id="1_ybot2"]
 [ext_resource type="Script" path="res://addons/beehave/nodes/composites/selector.gd" id="2_ru0kp"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/composites/sequence.gd" id="2_wil6j"]
-[ext_resource type="Script" path="res://Components/Behaviors/CheckForPlayer.gd" id="3_birpf"]
-[ext_resource type="Script" path="res://Components/Behaviors/MoveToPlayer.gd" id="4_wujuo"]
-[ext_resource type="Script" path="res://Components/Behaviors/MoveToPlayerAction.gd" id="5_4xi71"]
-[ext_resource type="Texture2D" uid="uid://b8xkj57ujly4m" path="res://Assets/Sprites/white_circle.png" id="5_82p3m"]
-[ext_resource type="Script" path="res://addons/beehave/nodes/decorators/inverter.gd" id="5_hb1xg"]
+[ext_resource type="PackedScene" uid="uid://cuq2bgse4t86w" path="res://Components/Behaviors/grabbed.tscn" id="3_6cqmf"]
+[ext_resource type="PackedScene" uid="uid://bo36ndb5f4mer" path="res://Components/Behaviors/attack_player_behavior.tscn" id="4_ws2k5"]
 [ext_resource type="Script" path="res://Components/MovementComponent.gd" id="5_tvb31"]
-[ext_resource type="Script" path="res://Components/Behaviors/Wander.gd" id="6_qui8e"]
+[ext_resource type="PackedScene" uid="uid://dr4o6b6j1x2we" path="res://Components/Behaviors/move_to_player.tscn" id="5_ytmvc"]
+[ext_resource type="PackedScene" uid="uid://bpvtv83wvdjkw" path="res://Components/Behaviors/wander.tscn" id="6_dvcmc"]
+[ext_resource type="Texture2D" uid="uid://dey3qsu5etdvl" path="res://Assets/Sprites/guy.png" id="8_hjxwh"]
+[ext_resource type="Script" path="res://Components/hurtbox_component.gd" id="11_w7nr3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yfaa0"]
-size = Vector2(8, 8)
+size = Vector2(8, 13)
 
-[node name="BadGuy" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jgay"]
+size = Vector2(8, 11)
+
+[sub_resource type="Animation" id="Animation_kiqx5"]
+resource_name = "IDLE"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_yp268"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_yav2j"]
+resource_name = "RUN"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_kgaoo"]
+resource_name = "ATTACK"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [26, 27, 28, 29, 30]
+}
+
+[sub_resource type="Animation" id="Animation_ppqhm"]
+resource_name = "GRABBED"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [31, 32]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gt8pk"]
+_data = {
+"ATTACK": SubResource("Animation_kgaoo"),
+"GRABBED": SubResource("Animation_ppqhm"),
+"IDLE": SubResource("Animation_kiqx5"),
+"RESET": SubResource("Animation_yp268"),
+"RUN": SubResource("Animation_yav2j")
+}
+
+[node name="BadGuy" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "animation_player", "hurtbox")]
+script = ExtResource("1_gus0m")
+sprite = NodePath("Sprite2D")
+animation_player = NodePath("AnimationPlayer")
+hurtbox = NodePath("HurtboxComponent")
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("1_ybot2")
-blackboard = NodePath("@Node@81733")
+blackboard = NodePath("@Node@203794")
 actor = NodePath("..")
 
 [node name="SelectorComposite" type="Node" parent="BeehaveTree"]
 script = ExtResource("2_ru0kp")
 
-[node name="AttackPlayer" type="Node" parent="BeehaveTree/SelectorComposite"]
-script = ExtResource("2_wil6j")
+[node name="Grabbed" parent="BeehaveTree/SelectorComposite" instance=ExtResource("3_6cqmf")]
 
-[node name="CheckForPlayer" type="Node" parent="BeehaveTree/SelectorComposite/AttackPlayer"]
-script = ExtResource("3_birpf")
-distance = 10.0
+[node name="AttackPlayer" parent="BeehaveTree/SelectorComposite" instance=ExtResource("4_ws2k5")]
 
-[node name="AttackPlayerAction" type="Node" parent="BeehaveTree/SelectorComposite/AttackPlayer"]
-script = ExtResource("4_wujuo")
+[node name="MoveToPlayer" parent="BeehaveTree/SelectorComposite" instance=ExtResource("5_ytmvc")]
 
-[node name="MoveToPlayer" type="Node" parent="BeehaveTree/SelectorComposite"]
-script = ExtResource("2_wil6j")
-
-[node name="CheckForPlayer" type="Node" parent="BeehaveTree/SelectorComposite/MoveToPlayer"]
-script = ExtResource("3_birpf")
-distance = 100.0
-
-[node name="MoveToPlayerAction" type="Node" parent="BeehaveTree/SelectorComposite/MoveToPlayer"]
-script = ExtResource("5_4xi71")
-
-[node name="Wander" type="Node" parent="BeehaveTree/SelectorComposite"]
-script = ExtResource("2_wil6j")
-
-[node name="InverterDecorator" type="Node" parent="BeehaveTree/SelectorComposite/Wander"]
-script = ExtResource("5_hb1xg")
-
-[node name="CheckForPlayer" type="Node" parent="BeehaveTree/SelectorComposite/Wander/InverterDecorator"]
-script = ExtResource("3_birpf")
-distance = 100.0
-
-[node name="WanderAction" type="Node" parent="BeehaveTree/SelectorComposite/Wander"]
-script = ExtResource("6_qui8e")
+[node name="Wander" parent="BeehaveTree/SelectorComposite" instance=ExtResource("6_dvcmc")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("5_82p3m")
+texture = ExtResource("8_hjxwh")
+hframes = 33
+frame = 1
 
-[node name="MovementComponent" type="Node" parent="."]
+[node name="MovementComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
 script = ExtResource("5_tvb31")
+entity = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_yfaa0")
+
+[node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity") groups=["Enemy"]]
+position = Vector2(0, -5)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("11_w7nr3")
+entity = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_5jgay")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gt8pk")
+}

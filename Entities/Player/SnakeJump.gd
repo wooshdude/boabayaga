@@ -63,12 +63,13 @@ func _physics_process(_delta):
 	player.move_and_slide()
 	
 	if grabbing and grab_target:
-		grab_target.monitorable = false
+		grab_target.grabbed = true
 		player.global_position = grab_target.global_position
 
 
 func on_area_entered(area):
 	if area.is_in_group("Enemy"):
+		print('Enemy')
 		grabbing = true
 		grab_target = area
 	if area.is_in_group("Weapon"):
@@ -107,6 +108,9 @@ func jump():
 	
 	if grabbing and grab_target:
 		grab_target.hit(-1)
+		#Engine.physics_ticks_per_second = 0
+		#await get_tree().create_timer(0.1).timeout
+		#Engine.physics_ticks_per_second = 0
 		grabbing = false
 		grab_target = null
 
